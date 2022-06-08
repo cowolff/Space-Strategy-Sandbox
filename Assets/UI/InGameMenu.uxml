@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="align-items: center; justify-content: flex-start; flex-direction: column-reverse; flex-wrap: nowrap; width: 100%; height: 100%;">
+        <ui:VisualElement style="width: 100%; height: 15%; flex-wrap: nowrap; justify-content: flex-start; flex-direction: row; color: rgb(75, 75, 75); -unity-text-outline-color: rgba(51, 51, 51, 255);">
+            <ui:VisualElement style="width: 15%; -unity-text-outline-color: rgba(60, 60, 60, 255);">
+                <ui:Label text="Assets:" display-tooltip-when-elided="true" name="AssetLabel" style="color: rgb(0, 0, 0);" />
+                <ui:Label text="Income:" display-tooltip-when-elided="true" name="IncomeLabel" style="color: rgb(0, 0, 0);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
