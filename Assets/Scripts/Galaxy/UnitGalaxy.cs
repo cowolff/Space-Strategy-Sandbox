@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class UnitGalaxy : MonoBehaviour
 {
-    public string name;
-    public int force;
-
-    public int price;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    public string ship_class { get; set; }
+    public int force { get; set; }
+    public int price { get; set; }
+    public int health { get; set; }
+    public int speed { get; set; }
+    public int buildingtime { get; set; }
 }

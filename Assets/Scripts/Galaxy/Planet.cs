@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetScript : MonoBehaviour
+public class Planet : MonoBehaviour
 {
 
     public string PlanetName;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FleetGalaxy : MonoBehaviour
 {
 
-    public List<ShipGalaxy> ships;
+    public List<UnitGalaxy> ships;
     public string name;
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class FleetGalaxy : MonoBehaviour
         
     }
 
-    public void AddShip(ShipGalaxy newShip){
+    public void AddShip(UnitGalaxy newShip){
         ships.Add(newShip);
     }
 

@@ -1,0 +1,15 @@
+{ "planets":[
+    {
+        "planet_name":"Home One",
+        "description":"Home One is a stupid example of a home",
+        "x_coordinate":"0",
+        "y_coordinate":"10"
+    },
+    {
+        "planet_name":"Home Two",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"10",
+        "y_coordinate":"0"
+    }
+]
+}
