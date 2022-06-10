@@ -15,7 +15,13 @@ public class Planet : MonoBehaviour
 
     public BuildingGalaxy[] buildings;
 
-    public string[] connectingPlanets;
+    public List<GameObject> connectingPlanets;
+
+    public List<GameObject> nearPlanets;
+
+    // TO-DO: Building type model implementieren
+    // public GameObject[] placeableBuildings;
+    public List<ShipTypeModel> producableShips;
 
     public FleetGalaxy[] fleets;
     public Stack<ShipGalaxy> productionStackSpace;
@@ -26,6 +32,7 @@ public class Planet : MonoBehaviour
         buildings = new BuildingGalaxy[numberOfBuildings];
         fleets = new FleetGalaxy[3];
         productionStackSpace = new Stack<ShipGalaxy>();
+        connectingPlanets = new List<GameObject>();
         productionStackGround = new Stack();
     }
 
@@ -37,17 +44,6 @@ public class Planet : MonoBehaviour
 
     public BuildingGalaxy[] GetBuildings(){
         return this.buildings;
-    }
-
-    public void CreateConnection(List<GameObject> planets){
-        foreach(string planet in this.connectingPlanets){
-            Debug.Log(planet);
-            GameObject line = Instantiate(line_prefab);
-            GameObject planet_obj = planets.Find(x => x.transform.GetComponent<Planet>().planetName == planet);
-            LineRenderer line_renderer = line.transform.GetChild(0).transform.GetComponent<LineRenderer>();
-            line_renderer.SetPosition(0, this.transform.position);
-            line_renderer.SetPosition(1, planet_obj.transform.position);
-        }
     }
 
     public void addBuilding(BuildingGalaxy newBuilding, int pos){

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ListPlanets
+public class TradeRoute
 {
-    public PlanetJSON[] planets;
+    public string[] planets;
 }

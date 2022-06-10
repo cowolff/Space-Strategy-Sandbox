@@ -26,9 +26,9 @@ public class Galaxy : MonoBehaviour
         
     }
 
-    public void LoadPlanets()
+    private void LoadPlanets()
     {
-        using (StreamReader r = new StreamReader("Assets/Scripts/Galaxy/Planets.json"))
+        using (StreamReader r = new StreamReader("Assets/Config/Planets.json"))
         {
             string json = r.ReadToEnd();
             ListPlanets planets = JsonUtility.FromJson<ListPlanets>(json);
@@ -39,13 +39,26 @@ public class Galaxy : MonoBehaviour
                 script.description = planet.description;
                 script.line_prefab = this.line_prefab;
                 script.numberOfBuildings = planet.number_of_buildings;
-                script.connectingPlanets = planet.GetConnectingPlanets();
                 this.planets.Add(planet_object);
             }
-        }
-        foreach(GameObject planet in this.planets){
-            Planet script = planet.transform.GetComponent<Planet>();
-            script.CreateConnection(this.planets);
+            foreach(TradeRoute route in planets.trade_routes){
+                for(int i = 0; i < route.planets.Length; i++){
+                    GameObject planet_object = this.planets.Find(x => x.transform.GetComponent<Planet>().planetName == route.planets[i]);
+                    Planet script = planet_object.transform.GetComponent<Planet>();
+                    if(i > 0){
+                        GameObject connectingPlanet = this.planets.Find(x => x.transform.GetComponent<Planet>().planetName == route.planets[i-1]);
+                        script.connectingPlanets.Add(connectingPlanet);
+                    }
+                    if(i < route.planets.Length - 1){
+                        GameObject connectingPlanet = this.planets.Find(x => x.transform.GetComponent<Planet>().planetName == route.planets[i+1]);
+                        script.connectingPlanets.Add(connectingPlanet);
+                        GameObject line = Instantiate(line_prefab);
+                        LineRenderer line_renderer = line.transform.GetChild(0).transform.GetComponent<LineRenderer>();
+                        line_renderer.SetPosition(0, planet_object.transform.position);
+                        line_renderer.SetPosition(1, connectingPlanet.transform.position);
+                    }
+                }
+            }
         }
     }
 
@@ -59,6 +72,19 @@ public class Galaxy : MonoBehaviour
             foreach (ShipTypeModel shipType in ships.ship_types)
             {
                 Debug.Log(shipType.id);
+            }
+        }
+    }
+
+    private void LoadBuildings(){
+        using (StreamReader r = new StreamReader("Assets/Config/Buildings.json"))
+        {
+            string json = r.ReadToEnd();
+            Debug.Log(json);
+            BuildingList buildings = JsonUtility.FromJson<BuildingList>(json);
+            foreach (BuildingModel building in buildings.buildings)
+            {
+                Debug.Log(building.id);
             }
         }
     }
