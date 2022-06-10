@@ -62,6 +62,19 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    private void PlanetVicinity(){
+        foreach(GameObject planet in this.planets){
+            foreach(GameObject secondPlanet in this.planets){
+                if(planet != secondPlanet){
+                    float distance = Vector3.Distance(planet.transform.position, secondPlanet.transform.position);
+                    if(distance < 20){
+                        planet.transform.GetComponent<Planet>().nearPlanets.Add(secondPlanet);
+                    }
+                }
+            }
+        }
+    }
+
     private void LoadShipTypes()
     {
         using (StreamReader r = new StreamReader("Assets/Config/Ships.json"))
@@ -81,10 +94,10 @@ public class Galaxy : MonoBehaviour
         {
             string json = r.ReadToEnd();
             Debug.Log(json);
-            BuildingList buildings = JsonUtility.FromJson<BuildingList>(json);
+            ListBuildings buildings = JsonUtility.FromJson<ListBuildings>(json);
             foreach (BuildingModel building in buildings.buildings)
             {
-                Debug.Log(building.id);
+                Debug.Log(building.building_name);
             }
         }
     }
