@@ -41,3 +41,6 @@ ehthumbs.db
 Thumbs.db
 *.log
 *.log
+
+# IDE
+.idea

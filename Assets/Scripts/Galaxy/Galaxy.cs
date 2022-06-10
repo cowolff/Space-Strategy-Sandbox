@@ -12,6 +12,7 @@ public class Galaxy : MonoBehaviour
     void Start()
     {
         LoadPlanets();
+        LoadShipTypes();
     }
 
     // Update is called once per frame
@@ -29,6 +30,20 @@ public class Galaxy : MonoBehaviour
             ListPlanets planets = JsonUtility.FromJson<ListPlanets>(json);
             foreach(PlanetJSON planet in planets.planets){
                 Debug.Log(planet.planet_name);
+            }
+        }
+    }
+
+    private void LoadShipTypes()
+    {
+        using (StreamReader r = new StreamReader("Assets/Config/Ships.json"))
+        {
+            string json = r.ReadToEnd();
+            Debug.Log(json);
+            ShipList ships = JsonUtility.FromJson<ShipList>(json);
+            foreach (ShipTypeModel shipType in ships.ship_types)
+            {
+                Debug.Log(shipType.id);
             }
         }
     }
