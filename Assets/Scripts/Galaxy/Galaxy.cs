@@ -90,7 +90,17 @@ public class Galaxy : MonoBehaviour
             ShipList ships = JsonUtility.FromJson<ShipList>(json);
             foreach (ShipTypeModel shipType in ships.ship_types)
             {
-                Debug.Log(shipType.id);
+                if(shipType.planet_restriction.Length == 0){
+                    foreach(GameObject planet in this.planets){
+                        planet.transform.GetComponent<Planet>().producableShips.Add(shipType);
+                    }
+                } 
+                else if(shipType.planet_restriction.Length == 1){
+                    foreach(string planet in shipType.planet_restriction){
+                        GameObject planet_object = this.planets.Find(x => x.transform.GetComponent<Planet>().planetName == planet);
+                        planet_object.transform.GetComponent<Planet>().producableShips.Add(shipType);
+                    }
+                }
             }
         }
     }

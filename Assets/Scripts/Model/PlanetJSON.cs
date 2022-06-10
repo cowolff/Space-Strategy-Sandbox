@@ -10,4 +10,9 @@ public class PlanetJSON
     public string x_coordinate;
     public string y_coordinate;
     public int number_of_buildings;
+    public int shipyard;
+
+    public bool is_shipyard(){
+        return shipyard == 1;
+    }
 }
