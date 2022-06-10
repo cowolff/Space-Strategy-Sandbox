@@ -5,13 +5,17 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
 
-    public string PlanetName;
+    public string planetName;
 
-    public string Description;
+    public string description;
 
     public int numberOfBuildings;
 
+    public GameObject line_prefab;
+
     public BuildingGalaxy[] buildings;
+
+    public string[] connectingPlanets;
 
     public FleetGalaxy[] fleets;
     public Stack<ShipGalaxy> productionStackSpace;
@@ -33,6 +37,17 @@ public class Planet : MonoBehaviour
 
     public BuildingGalaxy[] GetBuildings(){
         return this.buildings;
+    }
+
+    public void CreateConnection(List<GameObject> planets){
+        foreach(string planet in this.connectingPlanets){
+            Debug.Log(planet);
+            GameObject line = Instantiate(line_prefab);
+            GameObject planet_obj = planets.Find(x => x.transform.GetComponent<Planet>().planetName == planet);
+            LineRenderer line_renderer = line.transform.GetChild(0).transform.GetComponent<LineRenderer>();
+            line_renderer.SetPosition(0, this.transform.position);
+            line_renderer.SetPosition(1, planet_obj.transform.position);
+        }
     }
 
     public void addBuilding(BuildingGalaxy newBuilding, int pos){
