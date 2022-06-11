@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planet_prefab: {fileID: 6240610818414047149, guid: e540825bab01f7d4b844151c416e2232, type: 3}
+  line_prefab: {fileID: 3342023897068565012, guid: 50788969c018ade438b16e9048a2b1de, type: 3}
 --- !u!4 &833193404
 Transform:
   m_ObjectHideFlags: 0

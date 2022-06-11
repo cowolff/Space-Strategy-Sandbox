@@ -11,6 +11,8 @@ public class Planet : MonoBehaviour
 
     public int numberOfBuildings;
 
+    public GameObject fleet_1, fleet_2;
+
     public GameObject line_prefab;
 
     public BuildingGalaxy[] buildings;
@@ -74,12 +76,18 @@ public class Planet : MonoBehaviour
         return producable;
     }
 
-    public void AddFleet(FleetGalaxy fleet, int index){
-        if(fleets[index] == null){
-            fleets[index] = fleet;
+    public void AddFleet(GameObject fleet){
+        if(!fleet_1.transform.GetComponent<PlanetFleetSpot>().has_Fleet()){
+            fleet_1.transform.GetComponent<PlanetFleetSpot>().add_Fleet(fleet);
+        } else if(!fleet_2.transform.GetComponent<PlanetFleetSpot>().has_Fleet()){
+            fleet_2.transform.GetComponent<PlanetFleetSpot>().add_Fleet(fleet);
         } else {
-            fleets[index].CombineFleets(fleet);
+            fleet_1.transform.GetComponent<PlanetFleetSpot>().merge_Fleet(fleet);
         }
+    }
+
+    public void RemoveFleet(GameObject fleet){
+
     }
 
     public void AddShipProduction(){
