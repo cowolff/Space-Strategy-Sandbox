@@ -39,6 +39,8 @@ public class Galaxy : MonoBehaviour
                 script.description = planet.description;
                 script.line_prefab = this.line_prefab;
                 script.numberOfBuildings = planet.number_of_buildings;
+                Debug.Log(planet.shipyard);
+                script.SetSpaceStation(planet.startStation);
                 this.planets.Add(planet_object);
             }
             CreateLines(planets.trade_routes);

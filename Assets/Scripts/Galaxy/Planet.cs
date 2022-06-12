@@ -11,15 +11,21 @@ public class Planet : MonoBehaviour
 
     public int numberOfBuildings;
 
-    public GameObject fleet_1, fleet_2;
+    public GameObject fleet_1, fleet_2, spacestation_slot;
 
     public GameObject line_prefab;
+
+    public GameObject spacestation_prefab;
+
+    public GameObject spacestation;
 
     public BuildingGalaxy[] buildings;
 
     public List<GameObject> connectingPlanets;
 
     public List<GameObject> nearPlanets;
+
+    public int stationLevel;
 
     // TO-DO: Building type model implementieren
     // public GameObject[] placeableBuildings;
@@ -36,6 +42,12 @@ public class Planet : MonoBehaviour
         productionStackSpace = new Stack<ShipGalaxy>();
         connectingPlanets = new List<GameObject>();
         productionStackGround = new Stack();
+
+        if(this.stationLevel > 0){
+            GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            spacestation.transform.parent = this.transform;
+            spacestation.transform.position = spacestation_slot.transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -83,6 +95,20 @@ public class Planet : MonoBehaviour
             fleet_2.transform.GetComponent<PlanetFleetSpot>().add_Fleet(fleet);
         } else {
             fleet_1.transform.GetComponent<PlanetFleetSpot>().merge_Fleet(fleet);
+        }
+    }
+
+    public void SetSpaceStation(int level){
+        this.stationLevel = level;
+        Debug.Log("Station level: " + level);
+        if(this.stationLevel > 0){
+            GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            spacestation.transform.parent = this.transform;
+            spacestation.transform.position = spacestation_slot.transform.position;
+            spacestation.transform.localScale -= new Vector3(0.99f, 0.99f, 0.99f);
+            this.spacestation = spacestation;
+        } else {
+            Destroy(this.spacestation);
         }
     }
 

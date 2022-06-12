@@ -4,48 +4,54 @@
         "description":"Home One is a stupid example of a home",
         "x_coordinate":"0",
         "y_coordinate":"10",
-        "NumberOfBuildings":10,
-        "Shipyard":0
+        "numberOfBuildings":10,
+        "shipyard":0,
+        "startStation":1
     },
     {
         "planet_name":"Home Two",
         "description":"Home Two is a stupid example of a home",
         "x_coordinate":"10",
         "y_coordinate":"0",
-        "NumberOfBuildings":7,
-        "Shipyard":1
+        "numberOfBuildings":7,
+        "shipyard":1,
+        "startStation":0
     },
     {
         "planet_name":"Home Three",
         "description":"Home Two is a stupid example of a home",
         "x_coordinate":"10",
         "y_coordinate":"20",
-        "NumberOfBuildings":7,
-        "Shipyard":0
+        "numberOfBuildings":7,
+        "shipyard":0,
+        "startStation":2
     },
     {
         "planet_name":"Tiki Taka Home",
         "description":"Home Two is a stupid example of a home",
         "x_coordinate":"15",
         "y_coordinate":"10",
-        "NumberOfBuildings":7,
-        "Shipyard":0
+        "numberOfBuildings":7,
+        "shipyard":0,
+        "startStation":0
     },
     {
         "planet_name":"Planet four",
         "description":"Home Two is a stupid example of a home",
         "x_coordinate":"20",
         "y_coordinate":"13",
-        "NumberOfBuildings":7,
-        "Shipyard":1
+        "numberOfBuildings":7,
+        "shipyard":1,
+        "startStation":1
     },
     {
         "planet_name":"Planet six",
         "description":"Home Two is a stupid example of a home",
         "x_coordinate":"-10",
         "y_coordinate":"17",
-        "NumberOfBuildings":7,
-        "Shipyard":0
+        "numberOfBuildings":7,
+        "shipyard":0,
+        "startStation":1
     }
 ],
 "trade_routes":[
