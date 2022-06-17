@@ -2,24 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingGalaxy : MonoBehaviour
+public class BuildingGalaxy
 {
-    public int income;
+    public int income { get; set; }
 
-    public string name;
+    public string building_name { get; set; }
 
     public List<UnitGalaxy> producable;
 
     // Start is called before the first frame update
-    void Start()
+    public BuildingGalaxy()
     {
-        
+        producable = new List<UnitGalaxy>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }

@@ -1,0 +1,28 @@
+{
+    "buildings": [
+        {
+            "building_name": "Mine",
+            "desciption":"Ab in die Saeureminen!!",
+            "number_allowed": 3,
+            "building_level": 1,
+            "cost": 100,
+            "income": 20,
+            "production_time": 2,
+            "produing_units":[],
+            "squads": 0,
+            "defensive": 0
+        },
+        {
+            "building_name": "Factory",
+            "desciption":"Bob der Baumeister",
+            "number_allowed": 1,
+            "building_level": 1,
+            "cost": 100,
+            "income": 0,
+            "production_time": 2,
+            "produing_units":["Tank"],
+            "squads": 0,
+            "defensive": 0
+        }
+    ]
+}

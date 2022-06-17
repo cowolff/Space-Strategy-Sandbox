@@ -12,6 +12,7 @@ public class PlanetJSON
     public int number_of_buildings;
     public int shipyard;
     public int startStation;
+    public string[] buildings_placable;
 
     public bool is_shipyard(){
         return shipyard == 1;

@@ -6,7 +6,9 @@ using System.IO;
 public class Galaxy : MonoBehaviour
 {
 
-    List<GameObject> planets;
+    public List<GameObject> planets;
+
+    List<BuildingModel> buildings;
 
     public GameObject planet_prefab;
 
@@ -16,6 +18,7 @@ public class Galaxy : MonoBehaviour
     void Start()
     {
         this.planets = new List<GameObject>();
+        LoadBuildings();
         LoadPlanets();
         LoadShipTypes();
     }
@@ -24,6 +27,15 @@ public class Galaxy : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void LoadBuildings()
+    {
+        using(StreamReader r = new StreamReader("Assets/Config/Buildings.json")){
+            string json = r.ReadToEnd();
+            ListBuildings buildings = JsonUtility.FromJson<ListBuildings>(json);
+            this.buildings = new List<BuildingModel>(buildings.buildings);
+        }
     }
 
     private void LoadPlanets()
@@ -39,7 +51,10 @@ public class Galaxy : MonoBehaviour
                 script.description = planet.description;
                 script.line_prefab = this.line_prefab;
                 script.numberOfBuildings = planet.number_of_buildings;
-                Debug.Log(planet.shipyard);
+                foreach(string building in planet.buildings_placable){
+                    BuildingModel building_model = this.buildings.Find(x => x.building_name == building);
+                    script.placeableBuildings.Add(building_model);
+                }
                 script.SetSpaceStation(planet.startStation);
                 this.planets.Add(planet_object);
             }
@@ -76,7 +91,6 @@ public class Galaxy : MonoBehaviour
                     float distance = Vector3.Distance(planet.transform.position, secondPlanet.transform.position);
                     if(distance < 20){
                         planet.transform.GetComponent<Planet>().nearPlanets.Add(secondPlanet);
-                        Debug.Log(planet.transform.GetComponent<Planet>().planetName);
                     }
                 }
             }
@@ -88,7 +102,6 @@ public class Galaxy : MonoBehaviour
         using (StreamReader r = new StreamReader("Assets/Config/Ships.json"))
         {
             string json = r.ReadToEnd();
-            Debug.Log(json);
             ShipList ships = JsonUtility.FromJson<ShipList>(json);
             foreach (ShipTypeModel shipType in ships.ship_types)
             {
@@ -103,19 +116,6 @@ public class Galaxy : MonoBehaviour
                         planet_object.transform.GetComponent<Planet>().producableShips.Add(shipType);
                     }
                 }
-            }
-        }
-    }
-
-    private void LoadBuildings(){
-        using (StreamReader r = new StreamReader("Assets/Config/Buildings.json"))
-        {
-            string json = r.ReadToEnd();
-            Debug.Log(json);
-            ListBuildings buildings = JsonUtility.FromJson<ListBuildings>(json);
-            foreach (BuildingModel building in buildings.buildings)
-            {
-                Debug.Log(building.building_name);
             }
         }
     }

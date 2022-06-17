@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 357958417}
   - component: {fileID: 357958416}
+  - component: {fileID: 357958418}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -171,6 +172,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &357958418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357958415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d7e7e636c8840039e83140815e58ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIDocument: {fileID: 357958416}
+  m_Galaxy: {fileID: 833193402}
 --- !u!1 &448572232
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac1abaf6201043a59a941a600695c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planets: []
   planet_prefab: {fileID: 6240610818414047149, guid: e540825bab01f7d4b844151c416e2232, type: 3}
   line_prefab: {fileID: 3342023897068565012, guid: 50788969c018ade438b16e9048a2b1de, type: 3}
 --- !u!4 &833193404

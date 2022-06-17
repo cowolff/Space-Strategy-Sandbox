@@ -6,7 +6,11 @@
         "y_coordinate":"10",
         "numberOfBuildings":10,
         "shipyard":0,
-        "startStation":1
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     },
     {
         "planet_name":"Home Two",
@@ -15,7 +19,11 @@
         "y_coordinate":"0",
         "numberOfBuildings":7,
         "shipyard":1,
-        "startStation":0
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     },
     {
         "planet_name":"Home Three",
@@ -24,7 +32,11 @@
         "y_coordinate":"20",
         "numberOfBuildings":7,
         "shipyard":0,
-        "startStation":2
+        "startStation":2,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     },
     {
         "planet_name":"Tiki Taka Home",
@@ -33,7 +45,11 @@
         "y_coordinate":"10",
         "numberOfBuildings":7,
         "shipyard":0,
-        "startStation":0
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     },
     {
         "planet_name":"Planet four",
@@ -42,7 +58,11 @@
         "y_coordinate":"13",
         "numberOfBuildings":7,
         "shipyard":1,
-        "startStation":1
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     },
     {
         "planet_name":"Planet six",
@@ -51,7 +71,11 @@
         "y_coordinate":"17",
         "numberOfBuildings":7,
         "shipyard":0,
-        "startStation":1
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ]
     }
 ],
 "trade_routes":[
