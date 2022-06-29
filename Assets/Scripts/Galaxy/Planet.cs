@@ -8,6 +8,8 @@ public class Planet : MonoBehaviour
 
     public string planetName;
 
+    public int ownerId;
+
     public string description;
 
     public int numberOfBuildings;
@@ -92,6 +94,11 @@ public class Planet : MonoBehaviour
         return this.buildings;
     }
 
+    public List<ShipTypeModel> GetProducableShips(){
+        List<ShipTypeModel> models = this.producableShips.FindAll(x => x.req_space_station_level <= this.stationLevel);
+        return models;
+    }
+
     private void __PlaceBuilding(BuildingGalaxy building){
         for(int i = 0; i < 10; i++){
             Debug.Log(i);
@@ -154,7 +161,7 @@ public class Planet : MonoBehaviour
 
     }
 
-    public void AddShipProduction(){
+    public void AddShipProduction(string ship_name){
         
     }
 

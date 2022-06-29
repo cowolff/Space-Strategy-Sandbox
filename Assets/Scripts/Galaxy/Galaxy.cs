@@ -14,6 +14,10 @@ public class Galaxy : MonoBehaviour
 
     public GameObject line_prefab;
 
+    public int userId;
+
+    public string fraction;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -103,7 +107,10 @@ public class Galaxy : MonoBehaviour
         {
             string json = r.ReadToEnd();
             ShipList ships = JsonUtility.FromJson<ShipList>(json);
-            foreach (ShipTypeModel shipType in ships.ship_types)
+            List<ShipTypeModel> fraction_ships = new List<ShipTypeModel>();
+            fraction_ships.AddRange(ships.ship_types);
+            fraction_ships = fraction_ships.FindAll(x => x.affiliation == fraction);
+            foreach (ShipTypeModel shipType in fraction_ships)
             {
                 if(shipType.planet_restriction.Length == 0){
                     foreach(GameObject planet in this.planets){

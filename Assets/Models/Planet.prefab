@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: -4211445212626400216}
   m_Layer: 0
   m_Name: Planet
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,12 +488,13 @@ MonoBehaviour:
   line_prefab: {fileID: 0}
   spacestation_prefab: {fileID: 4406925663558808661, guid: bed280d79b072564b8bc8875ba3fe232, type: 3}
   spacestation: {fileID: 0}
-  buildings: []
   connectingPlanets: []
   nearPlanets: []
   stationLevel: 0
   producableShips: []
+  placeableBuildings: []
   fleets: []
+  buildingCountdown: 0
 --- !u!1 &8885836673305701330
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class GalaxyUI : MonoBehaviour
 
     private GameObject selectedFleet, oldPlanet;
 
+    Button spaceButton, groundButton;
+
     List<Button> currentButtons;
     VisualElement first_row;
     VisualElement second_row;
@@ -33,7 +35,11 @@ public class GalaxyUI : MonoBehaviour
         first_row = rootElement.Q<VisualElement>("FirstRow");
         second_row = rootElement.Q<VisualElement>("SecondRow");
         income_label = rootElement.Q<Label>("IncomeLabel");
+        spaceButton = rootElement.Q<Button>("SpaceButton");
+        groundButton = rootElement.Q<Button>("GroundButton");
 
+        spaceButton.clickable.clicked += this.GroundButtonClicked;
+        groundButton.clickable.clicked += this.SpaceButtonClicked;
     }
 
     void Update()
@@ -42,13 +48,36 @@ public class GalaxyUI : MonoBehaviour
         this.UpdateIncome();
     }
 
+    private void SpaceButtonClicked(){
+        this.clickedOnPlanet();
+    }
+
+    private void GroundButtonClicked(){
+        second_row.Clear();
+        Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
+        List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
+        for(int i = 0; i< ships.Count; i++){
+            Button button = new Button() { text = ships[i].id };
+            button.style.width = 160;
+            button.style.height = 50;
+            button.style.marginLeft = 10;
+            button.style.marginTop = 10;
+            button.style.marginBottom = 10;
+            button.style.marginRight = 10;
+            button.clickable.clicked += () => {
+                currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
+            };
+            second_row.Add(button);
+        }
+    }
+
     void clickedOnPlanet(){
         second_row.Clear();
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
         for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
             Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
             button.style.width = 160;
-            button.style.height = 30;
+            button.style.height = 50;
             button.style.marginLeft = 10;
             button.style.marginTop = 10;
             button.style.marginBottom = 10;
