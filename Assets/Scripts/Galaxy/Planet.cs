@@ -7,37 +7,28 @@ public class Planet : MonoBehaviour
 {
 
     public string planetName;
-
     public int ownerId;
-
     public string description;
-
     public int numberOfBuildings;
-
     public GameObject fleet_1, fleet_2, spacestation_slot;
-
     public GameObject line_prefab;
-
     public GameObject spacestation_prefab;
-
     public GameObject spacestation;
-
     public BuildingGalaxy[] buildings;
-
     public List<GameObject> connectingPlanets;
-
     public List<GameObject> nearPlanets;
-
     public int stationLevel;
 
     // TO-DO: Building type model implementieren
     // public GameObject[] placeableBuildings;
     public List<ShipTypeModel> producableShips;
-
     public List<BuildingModel> placeableBuildings;
-
     public FleetGalaxy[] fleets;
-    public Stack<ShipGalaxy> productionStackSpace;
+
+
+    public Stack<ShipTypeModel> productionStackSpace;
+    public ShipTypeModel currentShip;
+    public float shipCountdown;
 
 
     public Stack<BuildingModel> productionStackBuildings;
@@ -54,7 +45,7 @@ public class Planet : MonoBehaviour
     {
         buildings = new BuildingGalaxy[10];
         fleets = new FleetGalaxy[3];
-        productionStackSpace = new Stack<ShipGalaxy>();
+        productionStackSpace = new Stack<ShipTypeModel>();
         connectingPlanets = new List<GameObject>();
 
         if(this.stationLevel > 0){
@@ -67,6 +58,31 @@ public class Planet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        this.check_building_stack();
+        this.check_space_stack();
+    }
+
+    private void check_space_stack(){
+        if(currentShip == null && productionStackSpace.Count == 0){
+            return;
+        }
+        if(currentBuilding == null && productionStackSpace.Count != 0){
+            currentShip = productionStackSpace.Pop();
+            shipCountdown = (float)currentShip.build_time_in_seconds;
+            return;
+        }
+        if(shipCountdown > 0){
+            shipCountdown -= Time.deltaTime;
+            return;
+        } else if (currentShip != null){
+            Debug.Log("Ship finished: " + currentShip.id);
+            currentShip = null;
+            return;
+            // TO-DO: Add ship to fleet
+        }
+    }
+
+    private void check_building_stack(){
         if(currentBuilding == null && productionStackBuildings.Count == 0){
             return;
         }
@@ -162,7 +178,8 @@ public class Planet : MonoBehaviour
     }
 
     public void AddShipProduction(string ship_name){
-        
+        ShipTypeModel newShip = this.producableShips.Find(x => x.id == ship_name);
+        productionStackSpace.Push(newShip);
     }
 
     public void AddBuilding(string building){

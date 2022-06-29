@@ -59,7 +59,7 @@ public class GalaxyUI : MonoBehaviour
         for(int i = 0; i< ships.Count; i++){
             Button button = new Button() { text = ships[i].id };
             button.style.width = 160;
-            button.style.height = 50;
+            button.style.height = 40;
             button.style.marginLeft = 10;
             button.style.marginTop = 10;
             button.style.marginBottom = 10;
