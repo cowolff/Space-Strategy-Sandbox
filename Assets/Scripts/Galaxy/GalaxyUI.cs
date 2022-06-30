@@ -25,17 +25,28 @@ public class GalaxyUI : MonoBehaviour
     VisualElement first_row;
     VisualElement second_row;
     Label income_label;
+    Label asset_label;
+
+    int income;
+    int assets;
+    float time_left;
+    string current_menue;
 
     void Start()
     {
         var rootElement = m_UIDocument.rootVisualElement;
         currentButtons = new List<Button>();
 
+        this.assets = 1000;
+        this.time_left = 20f;
+        this.income = 0;
+
         m_GalaxyScript = m_Galaxy.GetComponent<Galaxy>();
 
         first_row = rootElement.Q<VisualElement>("FirstRow");
         second_row = rootElement.Q<VisualElement>("SecondRow");
         income_label = rootElement.Q<Label>("IncomeLabel");
+        asset_label = rootElement.Q<Label>("AssetLabel");
         spaceButton = rootElement.Q<Button>("SpaceButton");
         groundButton = rootElement.Q<Button>("GroundButton");
 
@@ -47,6 +58,7 @@ public class GalaxyUI : MonoBehaviour
     {
         this.DetectMouse();
         this.UpdateIncome();
+        this.UpdateAsset();
     }
 
     private void SpaceButtonClicked(){
@@ -56,6 +68,7 @@ public class GalaxyUI : MonoBehaviour
     private void GroundButtonClicked(){
         second_row.Clear();
         first_row.Clear();
+        this.current_menue = "Ground";
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
         for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
             Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
@@ -89,7 +102,7 @@ public class GalaxyUI : MonoBehaviour
     void clickedOnPlanet(){
         second_row.Clear();
         first_row.Clear();
-
+        this.current_menue = "Space";
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
         List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
         for(int i = 0; i< ships.Count; i++){
@@ -109,13 +122,22 @@ public class GalaxyUI : MonoBehaviour
 
     private void UpdateIncome()
     {
-        int income = 0;
+        this.income = 0;
         foreach (GameObject planet in m_GalaxyScript.planets)
         {
             Planet script = planet.transform.GetComponent<Planet>();
             income = income + script.GetIncome();
         }
         income_label.text = "Income: " + income;
+    }
+
+    private void UpdateAsset(){
+        this.time_left -= Time.deltaTime;
+        if(this.time_left < 0){
+            this.time_left = 20f;
+            this.assets = this.assets + this.income;
+        }
+        this.asset_label.text = "Assets: " + this.assets;
     }
 
     private void DetectMouse(){
@@ -152,6 +174,7 @@ public class GalaxyUI : MonoBehaviour
                 this.oldPlanet = hit3.collider.gameObject.transform.parent.gameObject;
             }
         }
+
         else if(this.selectedFleet != null){
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -166,9 +189,27 @@ public class GalaxyUI : MonoBehaviour
                 this.selectedFleet = null;
                 this.oldPlanet = null;
             } else {
+                this.selectedFleet.transform.position = this.oldPlanetCoor;
                 this.selectedFleet = null;
                 this.oldPlanet = null;
             }
+        }
+    }
+
+    public void ReloadBars(){
+        if(this.current_menue == "Ground"){
+            this.GroundButtonClicked();
+        } else {
+            this.clickedOnPlanet();
+        }
+    }
+
+    public bool ApplyCost(int cost){
+        if(this.assets >= cost){
+            this.assets -= cost;
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -14,6 +14,8 @@ public class Galaxy : MonoBehaviour
 
     public GameObject line_prefab;
 
+    public GameObject galaxyUI;
+
     public int userId;
 
     public string fraction;
@@ -51,6 +53,7 @@ public class Galaxy : MonoBehaviour
             foreach(PlanetJSON planet in planets.planets){
                 GameObject planet_object = Instantiate(planet_prefab, new Vector3(float.Parse(planet.x_coordinate), 0, float.Parse(planet.y_coordinate)),  Quaternion.identity);
                 Planet script = planet_object.transform.GetComponent<Planet>();
+                script.GalaxyUI = this.galaxyUI;
                 script.planetName = planet.planet_name;
                 script.description = planet.description;
                 script.line_prefab = this.line_prefab;

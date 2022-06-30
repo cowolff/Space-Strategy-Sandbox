@@ -7,13 +7,16 @@ public class Planet : MonoBehaviour
 {
 
     public string planetName;
-    public int ownerId;
+    public string faction;
     public string description;
     public int numberOfBuildings;
 
     public GameObject fleet_1, fleet_2, spacestation_slot;
     private MeshRenderer fleet_1_renderer, fleet_2_renderer;
     public FleetGalaxy[] fleets;
+
+    public GameObject GalaxyUI;
+    private GalaxyUI galaxyUIScript;
 
     public GameObject line_prefab;
     public GameObject spacestation_prefab;
@@ -42,6 +45,10 @@ public class Planet : MonoBehaviour
     void Awake(){
         placeableBuildings = new List<BuildingModel>();
         productionStackBuildings = new Stack<BuildingModel>();
+        productionStackSpace = new Stack<ShipTypeModel>();
+        connectingPlanets = new List<GameObject>();
+        fleet_1_renderer = fleet_1.transform.GetComponent<MeshRenderer>();
+        fleet_2_renderer = fleet_2.transform.GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -49,12 +56,7 @@ public class Planet : MonoBehaviour
         buildings = new BuildingGalaxy[10];
         fleets = new FleetGalaxy[2];
         currentShip = null;
-
-        fleet_1_renderer = fleet_1.transform.GetComponent<MeshRenderer>();
-        fleet_2_renderer = fleet_2.transform.GetComponent<MeshRenderer>();
-
-        productionStackSpace = new Stack<ShipTypeModel>();
-        connectingPlanets = new List<GameObject>();
+        this.galaxyUIScript = this.GalaxyUI.transform.GetComponent<GalaxyUI>();
 
         if(this.stationLevel > 0){
             GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -93,7 +95,7 @@ public class Planet : MonoBehaviour
         if(currentShip == null && productionStackSpace.Count == 0){
             return;
         }
-        if(currentBuilding == null && productionStackSpace.Count != 0){
+        if(currentShip == null && productionStackSpace.Count != 0){
             currentShip = productionStackSpace.Pop();
             shipCountdown = (float)currentShip.build_time_in_seconds;
             return;
@@ -116,6 +118,7 @@ public class Planet : MonoBehaviour
                 }
             }
             currentShip = null;
+            galaxyUIScript.ReloadBars();
         }
     }
 
@@ -139,6 +142,7 @@ public class Planet : MonoBehaviour
             newBuilding.income = currentBuilding.income;
             this.__PlaceBuilding(newBuilding);
             currentBuilding = null;
+            galaxyUIScript.ReloadBars();
             return;
         }
     }
@@ -154,7 +158,6 @@ public class Planet : MonoBehaviour
 
     private void __PlaceBuilding(BuildingGalaxy building){
         for(int i = 0; i < 10; i++){
-            Debug.Log(i);
             if(this.buildings[i] == null){
                 this.buildings[i] = building;
                 break;
@@ -198,7 +201,6 @@ public class Planet : MonoBehaviour
 
     public void SetSpaceStation(int level){
         this.stationLevel = level;
-        Debug.Log("Station level: " + level);
         if(this.stationLevel > 0){
             GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
             spacestation.transform.parent = this.transform;
@@ -211,16 +213,29 @@ public class Planet : MonoBehaviour
     }
 
     public void RemoveFleet(GameObject fleet){
+        if(fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script == fleets[0]){
+            fleets[0] = null;
+            return;
+        }
+        if(fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script == fleets[1]){
+            fleets[1] = null;
+            return;
+        }
     }
 
     public void AddShipProduction(string ship_name){
         ShipTypeModel newShip = this.producableShips.Find(x => x.id == ship_name);
-        productionStackSpace.Push(newShip);
+        if(galaxyUIScript.ApplyCost(newShip.cost)){
+            this.productionStackSpace.Push(newShip);
+            Debug.Log("Space Stack: " + productionStackSpace.Count);
+        }
     }
 
     public void AddBuilding(string building){
         BuildingModel newBuilding = this.placeableBuildings.Find(x => x.building_name == building);
-        productionStackBuildings.Push(newBuilding);
+        if(galaxyUIScript.ApplyCost(newBuilding.cost)){
+            this.productionStackBuildings.Push(newBuilding);
+        }
     }
 
     public static int GetTimestamp()
