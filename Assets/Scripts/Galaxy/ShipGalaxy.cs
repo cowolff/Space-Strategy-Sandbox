@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipGalaxy : MonoBehaviour
+public class ShipGalaxy
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string name { get; set; }
+    public int health { get; set; }
+    public string description { get; set; }
+    public int damage_per_second { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public ShipGalaxy(string name, int health, string description, int damage_per_second){
+        this.name = name;
+        this.health = health;
+        this.description = description;
+        this.damage_per_second = damage_per_second;
     }
 }

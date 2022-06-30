@@ -17,6 +17,7 @@ public class GalaxyUI : MonoBehaviour
     private GameObject selected_planet;
 
     private GameObject selectedFleet, oldPlanet;
+    private Vector3 oldPlanetCoor;
 
     Button spaceButton, groundButton;
 
@@ -38,8 +39,8 @@ public class GalaxyUI : MonoBehaviour
         spaceButton = rootElement.Q<Button>("SpaceButton");
         groundButton = rootElement.Q<Button>("GroundButton");
 
-        spaceButton.clickable.clicked += this.GroundButtonClicked;
-        groundButton.clickable.clicked += this.SpaceButtonClicked;
+        spaceButton.clickable.clicked += this.SpaceButtonClicked;
+        groundButton.clickable.clicked += this.GroundButtonClicked;
     }
 
     void Update()
@@ -54,6 +55,41 @@ public class GalaxyUI : MonoBehaviour
 
     private void GroundButtonClicked(){
         second_row.Clear();
+        first_row.Clear();
+        Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
+        for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
+            Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
+            button.style.width = 160;
+            button.style.height = 50;
+            button.style.marginLeft = 10;
+            button.style.marginTop = 10;
+            button.style.marginBottom = 10;
+            button.style.marginRight = 10;
+            button.clickable.clicked += () => {
+                currentPlanet.transform.GetComponent<Planet>().AddBuilding(button.text);
+            };
+            second_row.Add(button);
+        }
+
+        BuildingGalaxy[] buildings = currentPlanet.GetBuildings();
+        Debug.Log(buildings.Length);
+        for(int i = 0; i < buildings.Length; i++){
+            if(buildings[i] != null){
+                VisualElement new_element = new VisualElement();
+                new_element.style.width = 80;
+                new_element.style.height = 40;
+                Label new_label = new Label() {text = buildings[i].building_name};
+                new_label.style.marginTop = 10;
+                new_element.Add(new_label);
+                first_row.Add(new_element);
+            }
+        }
+    }
+
+    void clickedOnPlanet(){
+        second_row.Clear();
+        first_row.Clear();
+
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
         List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
         for(int i = 0; i< ships.Count; i++){
@@ -66,24 +102,6 @@ public class GalaxyUI : MonoBehaviour
             button.style.marginRight = 10;
             button.clickable.clicked += () => {
                 currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
-            };
-            second_row.Add(button);
-        }
-    }
-
-    void clickedOnPlanet(){
-        second_row.Clear();
-        Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
-        for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
-            Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
-            button.style.width = 160;
-            button.style.height = 50;
-            button.style.marginLeft = 10;
-            button.style.marginTop = 10;
-            button.style.marginBottom = 10;
-            button.style.marginRight = 10;
-            button.clickable.clicked += () => {
-                currentPlanet.transform.GetComponent<Planet>().AddBuilding(button.text);
             };
             second_row.Add(button);
         }
@@ -117,29 +135,34 @@ public class GalaxyUI : MonoBehaviour
             int layerMask = LayerMask.GetMask("Fleet");
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && this.selectedFleet == null){
-                this.selectedFleet = hit.collider.gameObject.transform.parent.gameObject;
+                this.selectedFleet = hit.collider.gameObject;
+                this.oldPlanetCoor = hit.collider.transform.position;
             }
 
             int layerMask2 = LayerMask.GetMask("Transport");
             RaycastHit hit2;
             if(Physics.Raycast(ray, out hit2, Mathf.Infinity, layerMask2) && this.selectedFleet != null){
-                this.selectedFleet.transform.position = hit2.point + new Vector3(0, (this.selectedFleet.transform.GetChild(0).transform.GetComponent<Collider>().bounds.size.y / 2), 0);
+                this.selectedFleet.transform.position = hit2.point + new Vector3(0, (this.selectedFleet.transform.GetComponent<Collider>().bounds.size.y / 2), 0);
             }
 
-            int layerMask3 = LayerMask.GetMask("Planet");
+            int layerMask3 = LayerMask.GetMask("Planet_Collider");
             RaycastHit hit3;
             if(Physics.Raycast(ray, out hit3, Mathf.Infinity, layerMask3) && this.oldPlanet == null && this.selectedFleet != null){
+                Debug.Log("Something is happening");
                 this.oldPlanet = hit3.collider.gameObject.transform.parent.gameObject;
             }
         }
         else if(this.selectedFleet != null){
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            int layerMask = LayerMask.GetMask("Planet");
+            int layerMask = LayerMask.GetMask("Planet_Collider");
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
+                Debug.Log("Colission happened");
                 hit.collider.gameObject.transform.parent.gameObject.GetComponent<Planet>().AddFleet(this.selectedFleet);
-                this.oldPlanet.transform.parent.gameObject.GetComponent<Planet>().RemoveFleet(this.selectedFleet);
+                Debug.Log(this.oldPlanet);
+                this.oldPlanet.transform.GetComponent<Planet>().RemoveFleet(this.selectedFleet);
+                this.selectedFleet.transform.position = this.oldPlanetCoor;
                 this.selectedFleet = null;
                 this.oldPlanet = null;
             } else {

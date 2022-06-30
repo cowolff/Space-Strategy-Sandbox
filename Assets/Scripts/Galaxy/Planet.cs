@@ -10,7 +10,11 @@ public class Planet : MonoBehaviour
     public int ownerId;
     public string description;
     public int numberOfBuildings;
+
     public GameObject fleet_1, fleet_2, spacestation_slot;
+    private MeshRenderer fleet_1_renderer, fleet_2_renderer;
+    public FleetGalaxy[] fleets;
+
     public GameObject line_prefab;
     public GameObject spacestation_prefab;
     public GameObject spacestation;
@@ -23,7 +27,6 @@ public class Planet : MonoBehaviour
     // public GameObject[] placeableBuildings;
     public List<ShipTypeModel> producableShips;
     public List<BuildingModel> placeableBuildings;
-    public FleetGalaxy[] fleets;
 
 
     public Stack<ShipTypeModel> productionStackSpace;
@@ -44,7 +47,12 @@ public class Planet : MonoBehaviour
     void Start()
     {
         buildings = new BuildingGalaxy[10];
-        fleets = new FleetGalaxy[3];
+        fleets = new FleetGalaxy[2];
+        currentShip = null;
+
+        fleet_1_renderer = fleet_1.transform.GetComponent<MeshRenderer>();
+        fleet_2_renderer = fleet_2.transform.GetComponent<MeshRenderer>();
+
         productionStackSpace = new Stack<ShipTypeModel>();
         connectingPlanets = new List<GameObject>();
 
@@ -60,6 +68,25 @@ public class Planet : MonoBehaviour
     {
         this.check_building_stack();
         this.check_space_stack();
+        this.UpdateFleetSpot();
+    }
+
+    private void UpdateFleetSpot(){
+        if(fleets[0] != null && fleet_1_renderer.enabled == false){
+            fleet_1_renderer.enabled = true;
+            fleet_1.transform.GetComponent<PlanetFleetSpot>().fleet_script = fleets[0];
+        } else if(fleets[0] == null && fleet_1_renderer.enabled == true){
+            fleet_1_renderer.enabled = false;
+            fleet_1.transform.GetComponent<PlanetFleetSpot>().fleet_script = null;
+        }
+        
+        if(fleets[1] != null && fleet_2_renderer.enabled == false){
+            fleet_2_renderer.enabled = true;
+            fleet_2.transform.GetComponent<PlanetFleetSpot>().fleet_script = fleets[1];
+        } else if(fleets[1] == null && fleet_2_renderer.enabled == true){
+            fleet_2_renderer.enabled = false;
+            fleet_2.transform.GetComponent<PlanetFleetSpot>().fleet_script = null;
+        }
     }
 
     private void check_space_stack(){
@@ -76,9 +103,19 @@ public class Planet : MonoBehaviour
             return;
         } else if (currentShip != null){
             Debug.Log("Ship finished: " + currentShip.id);
+            ShipGalaxy newShip = new ShipGalaxy(currentShip.id, currentShip.tactical_health, currentShip.description, currentShip.damage_per_second);
+            for(int i = 0; i < 2; i++){
+                if(fleets[i] != null){
+                    fleets[i].AddShip(newShip);
+                    break;
+                }
+                if(i == 1){
+                    FleetGalaxy newFleet = new FleetGalaxy();
+                    newFleet.AddShip(newShip);
+                    fleets[0] = newFleet;
+                }
+            }
             currentShip = null;
-            return;
-            // TO-DO: Add ship to fleet
         }
     }
 
@@ -150,12 +187,12 @@ public class Planet : MonoBehaviour
     }
 
     public void AddFleet(GameObject fleet){
-        if(!fleet_1.transform.GetComponent<PlanetFleetSpot>().has_Fleet()){
-            fleet_1.transform.GetComponent<PlanetFleetSpot>().add_Fleet(fleet);
-        } else if(!fleet_2.transform.GetComponent<PlanetFleetSpot>().has_Fleet()){
-            fleet_2.transform.GetComponent<PlanetFleetSpot>().add_Fleet(fleet);
+        if(fleets[0] == null){
+            fleets[0] = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
+        } else if(fleets[1] == null){
+            fleets[1] = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
         } else {
-            fleet_1.transform.GetComponent<PlanetFleetSpot>().merge_Fleet(fleet);
+            fleets[0].CombineFleets(fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script);
         }
     }
 
@@ -174,7 +211,6 @@ public class Planet : MonoBehaviour
     }
 
     public void RemoveFleet(GameObject fleet){
-
     }
 
     public void AddShipProduction(string ship_name){

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 956329365303469539}
   - component: {fileID: 5436689615244025516}
   - component: {fileID: 6326271584688297563}
-  - component: {fileID: 2278929899805599954}
-  m_Layer: 0
+  - component: {fileID: 637947285391989848}
+  m_Layer: 8
   m_Name: FleetSpot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2278929899805599954
+--- !u!114 &637947285391989848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,8 +331,8 @@ GameObject:
   - component: {fileID: 9180317498159785308}
   - component: {fileID: 7932182266195199139}
   - component: {fileID: 6433087843313500734}
-  - component: {fileID: 2098201191580790505}
-  m_Layer: 0
+  - component: {fileID: 5827250763034609140}
+  m_Layer: 8
   m_Name: FleetSpot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2098201191580790505
+--- !u!114 &5827250763034609140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetName: 
+  ownerId: 0
   description: 
   numberOfBuildings: 0
   fleet_1: {fileID: 2934572857615581121}
@@ -493,7 +494,29 @@ MonoBehaviour:
   stationLevel: 0
   producableShips: []
   placeableBuildings: []
-  fleets: []
+  currentShip:
+    id: 
+    description: 
+    planet_restriction: []
+    ship_class: 
+    affiliation: 
+    damage_per_second: 0
+    tactical_health: 0
+    shield_points: 0
+    shield_refresh_rate_per_second: 0
+    cost: 0
+    build_time_in_seconds: 0
+    speed: 0
+    hyperspace_capable: 0
+    sublight_speed: 0
+    population_slots: 0
+    req_space_station_level: 0
+    strong_against: []
+    weak_against: []
+    squadrons_capacity: []
+    num_per_squadron: 0
+    source: 
+  shipCountdown: 0
   buildingCountdown: 0
 --- !u!1 &8885836673305701330
 GameObject:
