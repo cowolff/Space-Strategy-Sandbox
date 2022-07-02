@@ -1,17 +1,20 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/SpaceButton.uss?fileID=7433441132597879392&amp;guid=0b7271ebdd64295419b3f9cb74f8da4a&amp;type=3#SpaceButton" />
     <ui:VisualElement style="align-items: center; justify-content: flex-start; flex-direction: column-reverse; flex-wrap: nowrap; width: 100%; height: 100%;">
-        <ui:VisualElement style="width: 100%; height: 15%; flex-wrap: nowrap; justify-content: flex-start; flex-direction: row; color: rgb(75, 75, 75); -unity-text-outline-color: rgb(51, 51, 51); background-color: rgb(99, 99, 99);">
+        <ui:VisualElement style="width: 100%; height: 15%; flex-wrap: nowrap; justify-content: flex-start; flex-direction: row; color: rgb(75, 75, 75); -unity-text-outline-color: rgb(51, 51, 51); background-color: rgba(99, 99, 99, 0.49);">
             <ui:VisualElement style="width: 10%; -unity-text-outline-color: rgb(60, 60, 60);">
-                <ui:Label text="Assets:" display-tooltip-when-elided="true" name="AssetLabel" style="color: rgb(0, 0, 0); margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
-                <ui:Label text="Income:" display-tooltip-when-elided="true" name="IncomeLabel" style="color: rgb(0, 0, 0); margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+                <ui:Label text="Faction:" display-tooltip-when-elided="true" name="FactionLabel" style="color: rgb(0, 221, 255); margin-left: 7px; margin-right: 7px; margin-top: 7px; margin-bottom: 7px; font-size: 20px;" />
+                <ui:Label text="Time left:" display-tooltip-when-elided="true" name="TimeLabel" style="color: rgb(0, 222, 255); margin-left: 7px; margin-right: 7px; margin-top: 7px; margin-bottom: 7px; font-size: 20px;" />
+                <ui:Label text="Assets:" display-tooltip-when-elided="true" name="AssetLabel" style="color: rgb(0, 222, 255); margin-left: 7px; margin-right: 7px; margin-top: 7px; margin-bottom: 7px; font-size: 20px;" />
+                <ui:Label text="Income:" display-tooltip-when-elided="true" name="IncomeLabel" style="color: rgb(0, 221, 255); margin-left: 7px; margin-right: 7px; margin-top: 7px; margin-bottom: 7px; font-size: 20px;" />
             </ui:VisualElement>
-            <ui:VisualElement>
-                <ui:Button text="Space" display-tooltip-when-elided="true" name="SpaceButton" style="width: 60px; height: 40%; margin-top: 5%; margin-bottom: 5%;" />
-                <ui:Button text="Ground" display-tooltip-when-elided="true" name="GroundButton" style="width: 60px; height: 40%; margin-top: 5%; margin-bottom: 5%;" />
+            <ui:VisualElement style="width: 120px;">
+                <ui:Button text="Space" display-tooltip-when-elided="true" name="SpaceButton" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; font-size: 20px; height: 40%; width: 100px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-left-color: rgb(0, 222, 255); border-right-color: rgb(0, 222, 255); border-top-color: rgb(0, 222, 255); border-bottom-color: rgb(0, 222, 255); color: rgb(0, 222, 255); margin-left: 5%; margin-right: 5%; margin-top: 5%; margin-bottom: 5%; background-color: rgba(56, 56, 56, 0.12);" />
+                <ui:Button text="Ground" display-tooltip-when-elided="true" name="GroundButton" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; width: 100px; height: 40%; font-size: 20px; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; margin-left: 5%; margin-right: 5%; margin-top: 5%; margin-bottom: 5%; color: rgb(255, 202, 0); border-left-color: rgb(255, 202, 0); border-right-color: rgb(255, 202, 0); border-top-color: rgb(255, 202, 0); border-bottom-color: rgb(255, 202, 0); background-color: rgba(56, 56, 56, 0.12);" />
             </ui:VisualElement>
             <ui:VisualElement style="border-left-color: rgba(165, 165, 165, 0); border-right-color: rgba(165, 165, 165, 0); border-top-color: rgba(165, 165, 165, 0); border-bottom-color: rgba(165, 165, 165, 0);">
                 <ui:VisualElement name="FirstRow" style="height: 50%; flex-direction: row;" />
-                <ui:VisualElement name="SecondRow" style="height: 50%; flex-direction: row;" />
+                <ui:VisualElement name="SecondRow" text="Faction:" style="height: 50%; flex-direction: row; justify-content: center;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

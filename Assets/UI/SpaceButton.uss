@@ -1,0 +1,33 @@
+.SpaceButton {
+    width: auto;
+    height: 80%;
+    font-size: 20px;
+    color: rgb(0, 222, 255);
+    border-left-color: rgb(0, 222, 255);
+    border-right-color: rgb(0, 222, 255);
+    border-top-color: rgb(0, 222, 255);
+    border-bottom-color: rgb(0, 222, 255);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 8px;
+}
+
+.GroundButton {
+    width: auto;
+    height: 80%;
+    font-size: 20px;
+    color: rgb(255, 202, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgb(255, 202, 0);
+    border-right-color: rgb(255, 202, 0);
+    border-top-color: rgb(255, 202, 0);
+    border-bottom-color: rgb(255, 202, 0);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-radius: 8px;
+}

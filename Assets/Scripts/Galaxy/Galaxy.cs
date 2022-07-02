@@ -18,7 +18,7 @@ public class Galaxy : MonoBehaviour
 
     public int userId;
 
-    public string fraction;
+    public string faction;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +57,9 @@ public class Galaxy : MonoBehaviour
                 script.planetName = planet.planet_name;
                 script.description = planet.description;
                 script.line_prefab = this.line_prefab;
+                script.baseIncome = planet.baseIncome;
                 script.numberOfBuildings = planet.number_of_buildings;
+                script.faction = planet.faction;
                 foreach(string building in planet.buildings_placable){
                     BuildingModel building_model = this.buildings.Find(x => x.building_name == building);
                     script.placeableBuildings.Add(building_model);
@@ -68,6 +70,10 @@ public class Galaxy : MonoBehaviour
             CreateLines(planets.trade_routes);
             PlanetVicinity();
         }
+    }
+
+    private void AddShipsOnStart(PlanetJSON planet, Planet script){
+
     }
 
     private void CreateLines(TradeRoute[] trade_routes){
@@ -112,7 +118,7 @@ public class Galaxy : MonoBehaviour
             ShipList ships = JsonUtility.FromJson<ShipList>(json);
             List<ShipTypeModel> fraction_ships = new List<ShipTypeModel>();
             fraction_ships.AddRange(ships.ship_types);
-            fraction_ships = fraction_ships.FindAll(x => x.affiliation == fraction);
+            fraction_ships = fraction_ships.FindAll(x => x.affiliation == faction);
             foreach (ShipTypeModel shipType in fraction_ships)
             {
                 if(shipType.planet_restriction.Length == 0){

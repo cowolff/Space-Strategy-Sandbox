@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class Planet : MonoBehaviour
 {
@@ -36,6 +37,13 @@ public class Planet : MonoBehaviour
     public ShipTypeModel currentShip;
     public float shipCountdown;
 
+    public int baseIncome;
+
+    public TMP_Text planetNameText;
+
+    private Color32 rebel_col;
+    private Color32 empire_col;
+
 
     public Stack<BuildingModel> productionStackBuildings;
     private BuildingModel currentBuilding;
@@ -49,6 +57,9 @@ public class Planet : MonoBehaviour
         connectingPlanets = new List<GameObject>();
         fleet_1_renderer = fleet_1.transform.GetComponent<MeshRenderer>();
         fleet_2_renderer = fleet_2.transform.GetComponent<MeshRenderer>();
+
+        this.empire_col = new Color32(15, 98, 230, 255);
+        this.rebel_col = new Color32(222, 41, 22, 255);
     }
 
     void Start()
@@ -71,6 +82,19 @@ public class Planet : MonoBehaviour
         this.check_building_stack();
         this.check_space_stack();
         this.UpdateFleetSpot();
+        this.UpdateText();
+
+    }
+
+    private void UpdateText(){
+        if(this.planetNameText.text != this.planetName){
+            this.planetNameText.text = this.planetName;
+        }
+        if(this.faction == "Empire" && this.planetNameText.color != this.empire_col){
+            this.planetNameText.color = this.empire_col;
+        } else if(this.faction == "Rebellion" && this.planetNameText.color != this.rebel_col){
+            this.planetNameText.color = this.rebel_col;
+        }
     }
 
     private void UpdateFleetSpot(){
@@ -176,6 +200,7 @@ public class Planet : MonoBehaviour
                 income += buildings[i].income;
             }
         }
+        income += this.baseIncome;
         return income;
     }
 

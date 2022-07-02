@@ -6,12 +6,14 @@
         "y_coordinate":"10",
         "faction":"Empire",
         "numberOfBuildings":10,
+        "baseIncome":10,
         "shipyard":0,
         "startStation":1,
         "buildings_placable":[
             "Mine",
             "Factory"
-        ]
+        ],
+        "startShips":[]
     },
     {
         "planet_name":"Home Two",
@@ -20,12 +22,14 @@
         "y_coordinate":"0",
         "faction":"Empire",
         "numberOfBuildings":7,
+        "baseIncome":10,
         "shipyard":1,
         "startStation":0,
         "buildings_placable":[
             "Mine",
             "Factory"
-        ]
+        ],
+        "startShips":[]
     },
     {
         "planet_name":"Home Three",
@@ -34,12 +38,14 @@
         "y_coordinate":"20",
         "faction":"Empire",
         "numberOfBuildings":7,
+        "baseIncome":10,
         "shipyard":0,
         "startStation":2,
         "buildings_placable":[
             "Mine",
             "Factory"
-        ]
+        ],
+        "startShips":[]
     },
     {
         "planet_name":"Tiki Taka Home",
@@ -48,12 +54,14 @@
         "y_coordinate":"10",
         "faction":"Empire",
         "numberOfBuildings":7,
+        "baseIncome":10,
         "shipyard":0,
         "startStation":0,
         "buildings_placable":[
             "Mine",
             "Factory"
-        ]
+        ],
+        "startShips":[]
     },
     {
         "planet_name":"Planet four",
@@ -62,11 +70,18 @@
         "y_coordinate":"13",
         "faction":"Rebellion",
         "numberOfBuildings":7,
+        "baseIncome":10,
         "shipyard":1,
         "startStation":1,
         "buildings_placable":[
             "Mine",
             "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
         ]
     },
     {
@@ -76,11 +91,18 @@
         "y_coordinate":"17",
         "faction":"Rebellion",
         "numberOfBuildings":7,
+        "baseIncome":10,
         "shipyard":0,
         "startStation":1,
         "buildings_placable":[
             "Mine",
             "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
         ]
     }
 ],

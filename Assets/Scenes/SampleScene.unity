@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 3164bc7e9ee4c1b47839bc8862e56271, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.006936233, g: 0.007827762, b: 0.00990417, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UIDocument: {fileID: 357958416}
   m_Galaxy: {fileID: 833193402}
+  styleSheet: {fileID: 7433441132597879392, guid: 0b7271ebdd64295419b3f9cb74f8da4a, type: 3}
 --- !u!1 &448572232
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +258,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510118075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -639,7 +640,7 @@ MonoBehaviour:
   line_prefab: {fileID: 3342023897068565012, guid: 50788969c018ade438b16e9048a2b1de, type: 3}
   galaxyUI: {fileID: 357958415}
   userId: 0
-  fraction: Empire
+  faction: Empire
 --- !u!4 &833193404
 Transform:
   m_ObjectHideFlags: 0

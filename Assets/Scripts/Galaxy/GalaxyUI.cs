@@ -26,11 +26,18 @@ public class GalaxyUI : MonoBehaviour
     VisualElement second_row;
     Label income_label;
     Label asset_label;
+    Label faction_label;
+    Label time_label;
+
+    public StyleSheet styleSheet;
 
     int income;
     int assets;
     float time_left;
     string current_menue;
+
+    ProgressBar spaceProgress;
+    ProgressBar groundProgress;
 
     void Start()
     {
@@ -49,9 +56,15 @@ public class GalaxyUI : MonoBehaviour
         asset_label = rootElement.Q<Label>("AssetLabel");
         spaceButton = rootElement.Q<Button>("SpaceButton");
         groundButton = rootElement.Q<Button>("GroundButton");
+        faction_label = rootElement.Q<Label>("FactionLabel");
+        time_label = rootElement.Q<Label>("TimeLabel");
+
+        faction_label.text = m_GalaxyScript.faction;
 
         spaceButton.clickable.clicked += this.SpaceButtonClicked;
         groundButton.clickable.clicked += this.GroundButtonClicked;
+
+        rootElement.styleSheets.Add(styleSheet);
     }
 
     void Update()
@@ -70,31 +83,29 @@ public class GalaxyUI : MonoBehaviour
         first_row.Clear();
         this.current_menue = "Ground";
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
-        for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
-            Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
-            button.style.width = 160;
-            button.style.height = 50;
-            button.style.marginLeft = 10;
-            button.style.marginTop = 10;
-            button.style.marginBottom = 10;
-            button.style.marginRight = 10;
-            button.clickable.clicked += () => {
-                currentPlanet.transform.GetComponent<Planet>().AddBuilding(button.text);
-            };
-            second_row.Add(button);
-        }
+        if(currentPlanet.faction == m_GalaxyScript.faction){
+            for(int i = 0; i<currentPlanet.placeableBuildings.Count; i++){
+                Button button = new Button() { text = currentPlanet.placeableBuildings[i].building_name };
+                button.AddToClassList("GroundButton");
+                button.clickable.clicked += () => {
+                    currentPlanet.transform.GetComponent<Planet>().AddBuilding(button.text);
+                };
+                second_row.Add(button);
+            }
+        
 
-        BuildingGalaxy[] buildings = currentPlanet.GetBuildings();
-        Debug.Log(buildings.Length);
-        for(int i = 0; i < buildings.Length; i++){
-            if(buildings[i] != null){
-                VisualElement new_element = new VisualElement();
-                new_element.style.width = 80;
-                new_element.style.height = 40;
-                Label new_label = new Label() {text = buildings[i].building_name};
-                new_label.style.marginTop = 10;
-                new_element.Add(new_label);
-                first_row.Add(new_element);
+            BuildingGalaxy[] buildings = currentPlanet.GetBuildings();
+            Debug.Log(buildings.Length);
+            for(int i = 0; i < buildings.Length; i++){
+                if(buildings[i] != null){
+                    VisualElement new_element = new VisualElement();
+                    new_element.style.width = 80;
+                    new_element.style.height = 40;
+                    Label new_label = new Label() {text = buildings[i].building_name};
+                    new_label.style.marginTop = 10;
+                    new_element.Add(new_label);
+                    first_row.Add(new_element);
+                }
             }
         }
     }
@@ -104,19 +115,16 @@ public class GalaxyUI : MonoBehaviour
         first_row.Clear();
         this.current_menue = "Space";
         Planet currentPlanet = selected_planet.transform.GetComponent<Planet>();
-        List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
-        for(int i = 0; i< ships.Count; i++){
-            Button button = new Button() { text = ships[i].id };
-            button.style.width = 160;
-            button.style.height = 40;
-            button.style.marginLeft = 10;
-            button.style.marginTop = 10;
-            button.style.marginBottom = 10;
-            button.style.marginRight = 10;
-            button.clickable.clicked += () => {
-                currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
-            };
-            second_row.Add(button);
+        if(currentPlanet.faction == m_GalaxyScript.faction){
+            List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
+            for(int i = 0; i< ships.Count; i++){
+                Button button = new Button() { text = ships[i].id };
+                button.AddToClassList("SpaceButton");
+                button.clickable.clicked += () => {
+                    currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
+                };
+                second_row.Add(button);
+            }
         }
     }
 
@@ -133,6 +141,7 @@ public class GalaxyUI : MonoBehaviour
 
     private void UpdateAsset(){
         this.time_left -= Time.deltaTime;
+        time_label.text = "Time left: -" + (int)(20 - (20 - this.time_left));
         if(this.time_left < 0){
             this.time_left = 20f;
             this.assets = this.assets + this.income;
