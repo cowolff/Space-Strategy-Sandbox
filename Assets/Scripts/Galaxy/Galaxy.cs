@@ -27,6 +27,7 @@ public class Galaxy : MonoBehaviour
         LoadBuildings();
         LoadPlanets();
         LoadShipTypes();
+        AddShipsOnStart();
     }
 
     // Update is called once per frame
@@ -72,8 +73,18 @@ public class Galaxy : MonoBehaviour
         }
     }
 
-    private void AddShipsOnStart(PlanetJSON planet, Planet script){
-
+    private void AddShipsOnStart(){
+        using (StreamReader r = new StreamReader("Assets/Config/Planets.json")){
+            string json = r.ReadToEnd();
+            ListPlanets json_planets = JsonUtility.FromJson<ListPlanets>(json);
+            foreach(PlanetJSON planet in json_planets.planets){
+                GameObject planet_object = this.planets.Find(x => x.transform.GetComponent<Planet>().planetName == planet.planet_name);
+                Planet script = planet_object.transform.GetComponent<Planet>();
+                foreach(string ship in planet.startShips){
+                    script.AddShipProduction(ship, false);
+                }
+            }
+        }
     }
 
     private void CreateLines(TradeRoute[] trade_routes){
@@ -116,14 +127,13 @@ public class Galaxy : MonoBehaviour
         {
             string json = r.ReadToEnd();
             ShipList ships = JsonUtility.FromJson<ShipList>(json);
-            List<ShipTypeModel> fraction_ships = new List<ShipTypeModel>();
-            fraction_ships.AddRange(ships.ship_types);
-            fraction_ships = fraction_ships.FindAll(x => x.affiliation == faction);
-            foreach (ShipTypeModel shipType in fraction_ships)
+
+            foreach (ShipTypeModel shipType in ships.ship_types)
             {
                 if(shipType.planet_restriction.Length == 0){
                     foreach(GameObject planet in this.planets){
-                        planet.transform.GetComponent<Planet>().producableShips.Add(shipType);
+                        Planet script = planet.transform.GetComponent<Planet>();
+                        script.producableShips.Add(shipType);
                     }
                 } 
                 else if(shipType.planet_restriction.Length == 1){

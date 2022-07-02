@@ -92,7 +92,7 @@ public class Planet : MonoBehaviour
         }
         if(this.faction == "Empire" && this.planetNameText.color != this.empire_col){
             this.planetNameText.color = this.empire_col;
-        } else if(this.faction == "Rebellion" && this.planetNameText.color != this.rebel_col){
+        } else if(this.faction == "Rebel" && this.planetNameText.color != this.rebel_col){
             this.planetNameText.color = this.rebel_col;
         }
     }
@@ -137,6 +137,7 @@ public class Planet : MonoBehaviour
                 }
                 if(i == 1){
                     FleetGalaxy newFleet = new FleetGalaxy();
+                    newFleet.faction = this.faction;
                     newFleet.AddShip(newShip);
                     fleets[0] = newFleet;
                 }
@@ -215,13 +216,22 @@ public class Planet : MonoBehaviour
     }
 
     public void AddFleet(GameObject fleet){
-        if(fleets[0] == null){
-            fleets[0] = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
-        } else if(fleets[1] == null){
-            fleets[1] = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
-        } else {
-            fleets[0].CombineFleets(fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script);
+        FleetGalaxy fleet_script = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
+        if(fleet_script.faction != this.faction){
+            this.FightAutomatedBattle(fleet_script);
+            return;
         }
+        if(fleets[0] == null){
+            fleets[0] = fleet_script;
+        } else if(fleets[1] == null){
+            fleets[1] = fleet_script;
+        } else {
+            fleets[0].CombineFleets(fleet_script);
+        }
+    }
+
+    private void FightAutomatedBattle(FleetGalaxy fleet_script){
+        Debug.Log("Battle");
     }
 
     public void SetSpaceStation(int level){
@@ -248,8 +258,13 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void AddShipProduction(string ship_name){
+    public void AddShipProduction(string ship_name, bool applyCost = true){
         ShipTypeModel newShip = this.producableShips.Find(x => x.id == ship_name);
+        if(applyCost == false){
+            Debug.Log(ship_name);
+            this.productionStackSpace.Push(newShip);
+            return;
+        }
         if(galaxyUIScript.ApplyCost(newShip.cost)){
             this.productionStackSpace.Push(newShip);
             Debug.Log("Space Stack: " + productionStackSpace.Count);

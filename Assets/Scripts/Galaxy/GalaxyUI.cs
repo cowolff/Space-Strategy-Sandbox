@@ -118,12 +118,14 @@ public class GalaxyUI : MonoBehaviour
         if(currentPlanet.faction == m_GalaxyScript.faction){
             List<ShipTypeModel> ships = currentPlanet.GetProducableShips();
             for(int i = 0; i< ships.Count; i++){
-                Button button = new Button() { text = ships[i].id };
-                button.AddToClassList("SpaceButton");
-                button.clickable.clicked += () => {
-                    currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
-                };
-                second_row.Add(button);
+                if(ships[i].affiliation == m_GalaxyScript.faction){
+                    Button button = new Button() { text = ships[i].id };
+                    button.AddToClassList("SpaceButton");
+                    button.clickable.clicked += () => {
+                        currentPlanet.transform.GetComponent<Planet>().AddShipProduction(button.text);
+                    };
+                    second_row.Add(button);
+                }
             }
         }
     }

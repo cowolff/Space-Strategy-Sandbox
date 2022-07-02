@@ -7,6 +7,7 @@ public class FleetGalaxy
 
     public List<ShipGalaxy> ships;
     public string name;
+    public string faction;
 
     public FleetGalaxy(){
         ships = new List<ShipGalaxy>();
