@@ -1,0 +1,155 @@
+{ "planets":[
+    {
+        "planet_name":"Coruscant",
+        "description":"Home One is a stupid example of a home",
+        "x_coordinate":"0",
+        "y_coordinate":"10",
+        "faction":"Empire",
+        "numberOfBuildings":10,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Anaxes",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"10",
+        "y_coordinate":"0",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":1,
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Abregado Rae",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"10",
+        "y_coordinate":"20",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":2,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Alderaan",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"20",
+        "y_coordinate":"20",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Tython",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"20",
+        "y_coordinate":"13",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":1,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
+        ]
+    },
+    {
+        "planet_name":"Naboo",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"17",
+        "y_coordinate":"17",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
+        ]
+    },
+    {
+        "planet_name":"Cato Neimodia",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"12",
+        "y_coordinate":"-12",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
+        ]
+    },
+    {
+        "planet_name":"Toydaria",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"-5",
+        "y_coordinate":"-11",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    }
+],
+"trade_routes":[
+    {
+        "planets":[
+            "Naboo",
+            "Tython",
+            "Alderaan"
+        ]
+    }
+]
+}
