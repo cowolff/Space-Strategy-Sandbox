@@ -19,6 +19,9 @@ public class Planet : MonoBehaviour
     public GameObject GalaxyUI;
     private GalaxyUI galaxyUIScript;
 
+    public GameObject Galaxy;
+    private Galaxy galaxyScript;
+
     public GameObject line_prefab;
     public GameObject spacestation_prefab;
     public GameObject spacestation;
@@ -46,7 +49,7 @@ public class Planet : MonoBehaviour
 
 
     public Stack<BuildingModel> productionStackBuildings;
-    private BuildingModel currentBuilding;
+    public BuildingModel currentBuilding;
     public float buildingCountdown;
     // Start is called before the first frame update
 
@@ -68,6 +71,7 @@ public class Planet : MonoBehaviour
         fleets = new FleetGalaxy[2];
         currentShip = null;
         this.galaxyUIScript = this.GalaxyUI.transform.GetComponent<GalaxyUI>();
+        this.galaxyScript = this.Galaxy.transform.GetComponent<Galaxy>();
 
         if(this.stationLevel > 0){
             GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -79,8 +83,8 @@ public class Planet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.check_building_stack();
-        this.check_space_stack();
+        this.CheckBuildingStack();
+        this.CheckSpaceStack();
         this.UpdateFleetSpot();
         this.UpdateText();
 
@@ -90,9 +94,9 @@ public class Planet : MonoBehaviour
         if(this.planetNameText.text != this.planetName){
             this.planetNameText.text = this.planetName;
         }
-        if(this.faction == "Empire" && this.planetNameText.color != this.empire_col){
+        if(this.faction == galaxyScript.faction && this.planetNameText.color != this.empire_col){
             this.planetNameText.color = this.empire_col;
-        } else if(this.faction == "Rebel" && this.planetNameText.color != this.rebel_col){
+        } else if(this.faction != galaxyScript.faction && this.planetNameText.color != this.rebel_col){
             this.planetNameText.color = this.rebel_col;
         }
     }
@@ -115,7 +119,7 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void check_space_stack(){
+    private void CheckSpaceStack(){
         if(currentShip == null && productionStackSpace.Count == 0){
             return;
         }
@@ -128,7 +132,6 @@ public class Planet : MonoBehaviour
             shipCountdown -= Time.deltaTime;
             return;
         } else if (currentShip != null){
-            Debug.Log("Ship finished: " + currentShip.id);
             ShipGalaxy newShip = new ShipGalaxy(currentShip.id, currentShip.tactical_health, currentShip.description, currentShip.damage_per_second);
             for(int i = 0; i < 2; i++){
                 if(fleets[i] != null){
@@ -147,7 +150,7 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void check_building_stack(){
+    private void CheckBuildingStack(){
         if(currentBuilding == null && productionStackBuildings.Count == 0){
             return;
         }
@@ -161,7 +164,6 @@ public class Planet : MonoBehaviour
             return;
         } 
         else if(currentBuilding != null) {
-            Debug.Log("Building finished: " + currentBuilding.building_name);
             BuildingGalaxy newBuilding = new BuildingGalaxy();
             newBuilding.building_name = currentBuilding.building_name;
             newBuilding.income = currentBuilding.income;
@@ -205,7 +207,7 @@ public class Planet : MonoBehaviour
         return income;
     }
 
-    public List<UnitGalaxy> getProducableUnits(){
+    public List<UnitGalaxy> GetProducableUnits(){
         List<UnitGalaxy> producable = new List<UnitGalaxy>();
         for(int i = 0; i < numberOfBuildings; i++){
             if(buildings[i] != null){
@@ -218,7 +220,22 @@ public class Planet : MonoBehaviour
     public void AddFleet(GameObject fleet){
         FleetGalaxy fleet_script = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
         if(fleet_script.faction != this.faction){
-            this.FightAutomatedBattle(fleet_script);
+            foreach(FleetGalaxy defending in this.fleets){
+                if(defending != null){
+                    this.FightAutomatedBattle(defending, fleet_script);
+                }
+            }
+            if(fleet_script.Count() > 0){
+                fleets[0] = fleet_script;
+                fleets[1] = null;
+                this.faction = fleet_script.faction;
+                this.productionStackSpace = new Stack<ShipTypeModel>();
+                this.productionStackBuildings = new Stack<BuildingModel>();
+                this.currentShip = null;
+                this.currentBuilding = null;
+                this.shipCountdown = 0f;
+                this.buildingCountdown = 0f;
+            }
             return;
         }
         if(fleets[0] == null){
@@ -230,8 +247,13 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void FightAutomatedBattle(FleetGalaxy fleet_script){
-        Debug.Log("Battle");
+    private void FightAutomatedBattle(FleetGalaxy defending, FleetGalaxy attacking){
+        while(defending.Count() != 0 && attacking.Count() != 0){
+            int damage = defending.GetDamage();
+            attacking.ApplyDamage(damage);
+            damage = attacking.GetDamage();
+            defending.ApplyDamage(damage);
+        }
     }
 
     public void SetSpaceStation(int level){
@@ -261,13 +283,14 @@ public class Planet : MonoBehaviour
     public void AddShipProduction(string ship_name, bool applyCost = true){
         ShipTypeModel newShip = this.producableShips.Find(x => x.id == ship_name);
         if(applyCost == false){
-            Debug.Log(ship_name);
             this.productionStackSpace.Push(newShip);
             return;
         }
         if(galaxyUIScript.ApplyCost(newShip.cost)){
             this.productionStackSpace.Push(newShip);
             Debug.Log("Space Stack: " + productionStackSpace.Count);
+        } else {
+            Debug.Log("Not enough moneten");
         }
     }
 

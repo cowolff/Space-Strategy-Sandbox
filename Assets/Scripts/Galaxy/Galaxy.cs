@@ -20,9 +20,14 @@ public class Galaxy : MonoBehaviour
 
     public string faction;
 
+    public string path;
+
     // Start is called before the first frame update
     void Start()
     {
+        this.faction = StaticInformation.faction;
+        this.path = StaticInformation.path;
+
         this.planets = new List<GameObject>();
         LoadBuildings();
         LoadPlanets();
@@ -38,7 +43,7 @@ public class Galaxy : MonoBehaviour
 
     private void LoadBuildings()
     {
-        using(StreamReader r = new StreamReader("Assets/Config/Buildings.json")){
+        using(StreamReader r = new StreamReader(this.path + "Buildings.json")){
             string json = r.ReadToEnd();
             ListBuildings buildings = JsonUtility.FromJson<ListBuildings>(json);
             this.buildings = new List<BuildingModel>(buildings.buildings);
@@ -47,7 +52,7 @@ public class Galaxy : MonoBehaviour
 
     private void LoadPlanets()
     {
-        using (StreamReader r = new StreamReader("Assets/Config/Planets.json"))
+        using (StreamReader r = new StreamReader(this.path + "Planets.json"))
         {
             string json = r.ReadToEnd();
             ListPlanets planets = JsonUtility.FromJson<ListPlanets>(json);
@@ -61,6 +66,7 @@ public class Galaxy : MonoBehaviour
                 script.baseIncome = planet.baseIncome;
                 script.numberOfBuildings = planet.number_of_buildings;
                 script.faction = planet.faction;
+                script.Galaxy = this.transform.gameObject;
                 foreach(string building in planet.buildings_placable){
                     BuildingModel building_model = this.buildings.Find(x => x.building_name == building);
                     script.placeableBuildings.Add(building_model);
@@ -74,7 +80,7 @@ public class Galaxy : MonoBehaviour
     }
 
     private void AddShipsOnStart(){
-        using (StreamReader r = new StreamReader("Assets/Config/Planets.json")){
+        using (StreamReader r = new StreamReader(this.path + "Planets.json")){
             string json = r.ReadToEnd();
             ListPlanets json_planets = JsonUtility.FromJson<ListPlanets>(json);
             foreach(PlanetJSON planet in json_planets.planets){
@@ -123,7 +129,7 @@ public class Galaxy : MonoBehaviour
 
     private void LoadShipTypes()
     {
-        using (StreamReader r = new StreamReader("Assets/Config/Ships.json"))
+        using (StreamReader r = new StreamReader(this.path + "Ships.json"))
         {
             string json = r.ReadToEnd();
             ShipList ships = JsonUtility.FromJson<ShipList>(json);

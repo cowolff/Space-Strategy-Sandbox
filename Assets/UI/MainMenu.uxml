@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="width: 100%; height: 100%; background-color: rgba(56, 56, 56, 0);">
+        <ui:VisualElement style="align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 10%; padding-right: 10%; padding-top: 10%; padding-bottom: 10%;">
+            <ui:VisualElement style="padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border-left-width: 10px; border-right-width: 10px; border-top-width: 10px; border-bottom-width: 10px; background-color: rgb(87, 87, 87); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <ui:Label text="Select Game" display-tooltip-when-elided="true" style="font-size: 30px;" />
+                <ui:Label text="Mods:" display-tooltip-when-elided="true" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; font-size: 20px;" />
+                <ui:VisualElement name="ModList" />
+                <ui:Label text="Faction:" display-tooltip-when-elided="true" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; font-size: 20px;" />
+                <ui:VisualElement name="FactionList" />
+                <ui:VisualElement style="flex-direction: row; justify-content: center;">
+                    <ui:Button text="Quit Game" display-tooltip-when-elided="true" name="QuitButton" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px;" />
+                    <ui:Button text="Start Game" display-tooltip-when-elided="true" name="StartButton" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,119 @@
+{ "planets":[
+    {
+        "planet_name":"Home One",
+        "description":"Home One is a stupid example of a home",
+        "x_coordinate":"0",
+        "y_coordinate":"10",
+        "faction":"Empire",
+        "numberOfBuildings":10,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Home Two",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"10",
+        "y_coordinate":"0",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":1,
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Home Three",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"10",
+        "y_coordinate":"20",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":2,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Tiki Taka Home",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"15",
+        "y_coordinate":"10",
+        "faction":"Empire",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":0,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[]
+    },
+    {
+        "planet_name":"Planet four",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"20",
+        "y_coordinate":"13",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":1,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
+        ]
+    },
+    {
+        "planet_name":"Planet six",
+        "description":"Home Two is a stupid example of a home",
+        "x_coordinate":"-10",
+        "y_coordinate":"17",
+        "faction":"Rebel",
+        "numberOfBuildings":7,
+        "baseIncome":10,
+        "shipyard":0,
+        "startStation":1,
+        "buildings_placable":[
+            "Mine",
+            "Factory"
+        ],
+        "startShips":[
+            "X-wing", 
+            "X-wing",
+            "Nebulon-B Frigate",
+            "Nebulon-B Frigate"
+        ]
+    }
+],
+"trade_routes":[
+    {
+        "planets":[
+            "Home One",
+            "Home Two",
+            "Home Three",
+            "Tiki Taka Home"
+        ]
+    }
+]
+}
