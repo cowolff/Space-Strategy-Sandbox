@@ -30,7 +30,6 @@ public class Planet : MonoBehaviour
     public List<GameObject> nearPlanets;
     public int stationLevel;
 
-    // TO-DO: Building type model implementieren
     // public GameObject[] placeableBuildings;
     public List<ShipTypeModel> producableShips;
     public List<BuildingModel> placeableBuildings;
@@ -73,6 +72,7 @@ public class Planet : MonoBehaviour
         this.galaxyUIScript = this.GalaxyUI.transform.GetComponent<GalaxyUI>();
         this.galaxyScript = this.Galaxy.transform.GetComponent<Galaxy>();
 
+        // Shows the space station if the planet has one
         if(this.stationLevel > 0){
             GameObject spacestation = Instantiate(spacestation_prefab, new Vector3(0, 0, 0), Quaternion.identity);
             spacestation.transform.parent = this.transform;
@@ -90,6 +90,7 @@ public class Planet : MonoBehaviour
 
     }
 
+    // Updates the text color of the planet according the faction which owns the planet
     private void UpdateText(){
         if(this.planetNameText.text != this.planetName){
             this.planetNameText.text = this.planetName;
@@ -101,6 +102,7 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // Updates the Fleet spot renderer in orbit depending on whether there actually is a fleet in orbit
     private void UpdateFleetSpot(){
         if(fleets[0] != null && fleet_1_renderer.enabled == false){
             fleet_1_renderer.enabled = true;
@@ -119,6 +121,7 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // Handles the space production stack. If a spacecraft is finished, it is added to an existing fleet or a new fleet is created, if none exists already
     private void CheckSpaceStack(){
         if(currentShip == null && productionStackSpace.Count == 0){
             return;
@@ -150,6 +153,7 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // Handles the building production stack and checks whether a building is finished
     private void CheckBuildingStack(){
         if(currentBuilding == null && productionStackBuildings.Count == 0){
             return;
@@ -217,6 +221,8 @@ public class Planet : MonoBehaviour
         return producable;
     }
 
+    // If a new fleet is added by draging and dropping it on the planet, it is either added to the existing planet
+    // or there is an automated battle between these two if they are not from the same faction
     public void AddFleet(GameObject fleet){
         FleetGalaxy fleet_script = fleet.transform.GetComponent<PlanetFleetSpot>().fleet_script;
         if(fleet_script.faction != this.faction){
@@ -247,6 +253,7 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // The automated battle goes in rounds. The fleet, which lost all of its ships first, looses the battle.
     private void FightAutomatedBattle(FleetGalaxy defending, FleetGalaxy attacking){
         while(defending.Count() != 0 && attacking.Count() != 0){
             int damage = defending.GetDamage();
@@ -280,6 +287,7 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // Adds a ship to the production stack
     public void AddShipProduction(string ship_name, bool applyCost = true){
         ShipTypeModel newShip = this.producableShips.Find(x => x.id == ship_name);
         if(applyCost == false){

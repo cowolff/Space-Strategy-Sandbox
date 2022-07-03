@@ -50,6 +50,7 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    // Loading the planets from the JSON File and adding them to the scene
     private void LoadPlanets()
     {
         using (StreamReader r = new StreamReader(this.path + "Planets.json"))
@@ -79,6 +80,7 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    // Loading the respective starting ships for each planet from the JSON File and adding them to the production queue
     private void AddShipsOnStart(){
         using (StreamReader r = new StreamReader(this.path + "Planets.json")){
             string json = r.ReadToEnd();
@@ -93,6 +95,7 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    // Display the lines for the trade routes, though they at this point don't serve any specific purpose
     private void CreateLines(TradeRoute[] trade_routes){
         foreach(TradeRoute route in trade_routes){
             for(int i = 0; i < route.planets.Length; i++){
@@ -114,6 +117,7 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    // Calculate planets in the vicinity. Also not important at this point yet
     private void PlanetVicinity(){
         foreach(GameObject planet in this.planets){
             foreach(GameObject secondPlanet in this.planets){
@@ -127,6 +131,7 @@ public class Galaxy : MonoBehaviour
         }
     }
 
+    // Loading the different ship types for each faction into the current scene and to each planet
     private void LoadShipTypes()
     {
         using (StreamReader r = new StreamReader(this.path + "Ships.json"))

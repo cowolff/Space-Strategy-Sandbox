@@ -38,7 +38,6 @@ public class MainMenuScript : MonoBehaviour
         this.startGame = rootElement.Q<Button>("StartButton");
 
         this.mod_list = Directory.GetDirectories("Config");
-        // this.mod_list = AssetDatabase.GetS.ubFolders("Assets/Config");
 
         foreach(string mod in mod_list){
             Button new_button = new Button(){ text = mod.Split("\\")[mod.Split("\\").Length - 1] };

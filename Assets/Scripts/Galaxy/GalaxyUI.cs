@@ -45,10 +45,12 @@ public class GalaxyUI : MonoBehaviour
         var rootElement = m_UIDocument.rootVisualElement;
         currentButtons = new List<Button>();
 
+        // Starting assets
         this.assets = 1000;
         this.time_left = 20f;
         this.income = 0;
 
+        // Get all the UI features
         m_GalaxyScript = m_Galaxy.GetComponent<Galaxy>();
 
         first_row = rootElement.Q<VisualElement>("FirstRow");
@@ -80,6 +82,7 @@ public class GalaxyUI : MonoBehaviour
         this.ClickedOnPlanet();
     }
 
+    // Update the progress on the current production queues on the ground and in space
     private void UpdateProgress(){
         progress.Clear();
         if(this.selected_planet != null){
@@ -118,6 +121,7 @@ public class GalaxyUI : MonoBehaviour
         }
     }
 
+    // Creates the Buttons and Visual Elements if the user presses die Ground button for a planet
     private void GroundButtonClicked(){
         second_row.Clear();
         first_row.Clear();
@@ -149,6 +153,7 @@ public class GalaxyUI : MonoBehaviour
         }
     }
 
+    // // Creates the Buttons and Visual Elements if the user clicks on a planet or presses the space button
     void ClickedOnPlanet(){
         second_row.Clear();
         first_row.Clear();
@@ -172,6 +177,7 @@ public class GalaxyUI : MonoBehaviour
         }
     }
 
+    // Calculates the income from all of your planets
     private void UpdateIncome()
     {
         this.income = 0;
@@ -183,6 +189,7 @@ public class GalaxyUI : MonoBehaviour
         income_label.text = "Income: " + income;
     }
 
+    // Each day takes 20 seconds and after this time the player gets new assets in the amount of the daily income
     private void UpdateAsset(){
         this.time_left -= Time.deltaTime;
         time_label.text = "Time left: -" + (int)(20 - (20 - this.time_left));
@@ -193,6 +200,7 @@ public class GalaxyUI : MonoBehaviour
         this.asset_label.text = "Assets: " + this.assets;
     }
 
+    // Implements the drag and drop system for the fleets and handles which planet is currently selected
     private void DetectMouse(){
         if(Input.GetMouseButtonDown(0)){
             RaycastHit hit;
